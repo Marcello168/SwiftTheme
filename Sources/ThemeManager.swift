@@ -11,13 +11,16 @@ import Foundation
 public let ThemeUpdateNotification = "ThemeUpdateNotification"
 
 public enum ThemePath {
-    
+    //TODO: 增加其他Bundle
     case mainBundle
     case sandbox(Foundation.URL)
+    case otherBundle(Bundle)
+
     
     public var URL: Foundation.URL? {
         switch self {
         case .mainBundle        : return nil
+        case .otherBundle : return nil
         case .sandbox(let path) : return path
         }
     }
@@ -34,6 +37,8 @@ public enum ThemePath {
         switch self {
         case .mainBundle:
             return Bundle.main.path(forResource: name, ofType: type)
+        case .otherBundle(let bundle):
+            return bundle.path(forResource: name, ofType: type)
         case .sandbox(let path):
             let name = name.hasSuffix(".\(type)") ? name : "\(name).\(type)"
             let url = path.appendingPathComponent(name)
