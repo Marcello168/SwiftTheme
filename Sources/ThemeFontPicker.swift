@@ -10,6 +10,10 @@ import UIKit
 
 @objc public final class ThemeFontPicker: ThemePicker {
     
+    public convenience init(keyPath: String) {
+        self.init(v: { ThemeManager.value(for: keyPath) })
+    }
+    
     public convenience init(keyPath: String, map: @escaping (Any?) -> UIFont?) {
         self.init(v: { map(ThemeManager.value(for: keyPath)) })
     }
@@ -29,6 +33,10 @@ import UIKit
 }
 
 @objc public extension ThemeFontPicker {
+    
+    class func pickerWithKeyPath(_ keyPath: String) -> ThemeFontPicker {
+        return ThemeFontPicker(keyPath: keyPath)
+    }
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIFont?) -> ThemeFontPicker {
         return ThemeFontPicker(keyPath: keyPath, map: map)
