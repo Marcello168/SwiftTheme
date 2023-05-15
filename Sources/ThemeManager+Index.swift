@@ -21,11 +21,32 @@ extension ThemeManager {
     
     public class func imageElement(for array: [String]) -> UIImage? {
         guard let imageName = element(for: array) else { return nil }
-        guard let image = UIImage(named: imageName as String) else {
-            print("SwiftTheme WARNING: Not found image name '\(imageName)' in array: \(array)[\(currentThemeIndex)]")
-            return nil
+        
+        //TODO: 获取到当前的主题路径
+        
+        guard let themePath = ThemeManager.currentThemePath else { return nil }
+        
+        switch themePath {
+      
+        case .otherBundle(let bundle):
+            guard let image = UIImage(named: imageName, in: bundle, compatibleWith: nil) else {
+                print("SwiftTheme WARNING: Not found image name '\(imageName)' in array: \(array)[\(currentThemeIndex)]")
+                return nil
+            }
+            return image
+
+        default:
+            
+            guard let image = UIImage(named: imageName as String) else {
+                print("SwiftTheme WARNING: Not found image name '\(imageName)' in array: \(array)[\(currentThemeIndex)]")
+                return nil
+            }
+            return image
         }
-        return image
+        
+      
+       
+
     }
     
     public class func element<T>(for array: [T]) -> T? {

@@ -54,7 +54,7 @@ public enum ThemePath {
     @objc public fileprivate(set) static var currentTheme: NSDictionary?
     @objc public fileprivate(set) static var currentThemeIndex: Int = 0
     
-    public fileprivate(set) static var currentThemePath: ThemePath?
+    public static var currentThemePath: ThemePath?
 
 }
 
@@ -63,6 +63,7 @@ public extension ThemeManager {
     @objc class func setTheme(index: Int) {
         currentThemeIndex = index
         NotificationCenter.default.post(name: Notification.Name(rawValue: ThemeUpdateNotification), object: nil)
+        
     }
     
     class func setTheme(plistName: String, path: ThemePath) {
