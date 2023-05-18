@@ -56,6 +56,22 @@ import UIKit
             }
             return image
         } else {
+            
+            switch currentThemePath {
+            case .otherBundle(let bundle):
+               
+                guard let image =  UIImage.init(named: imageName, in: bundle, compatibleWith: nil) else {
+                    print("SwiftTheme WARNING: Not found image name at \(bundle) bundle: \(imageName)")
+                    return nil
+                }
+                return image
+            default:
+                guard let image = UIImage(named: imageName) else {
+                    print("SwiftTheme WARNING: Not found image name at main bundle: \(imageName)")
+                    return nil
+                }
+                return image
+            }
             guard let image = UIImage(named: imageName) else {
                 print("SwiftTheme WARNING: Not found image name at main bundle: \(imageName)")
                 return nil
